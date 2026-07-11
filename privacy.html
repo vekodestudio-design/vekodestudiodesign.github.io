@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!--
+  Správce: VeKode studio · vekode.studio@gmail.com · účinné od 11. 7. 2026.
+  Poctivý koncept podle reálných datových toků appky, ne právní posudek —
+  před ostrým vydáním ideálně nech přejít právníkem. Odkazy mezi stránkami
+  jsou relativní (delete-account.html), takže fungují na jakékoli doméně.
+-->
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zásady ochrany osobních údajů — Smart Garden</title>
+  <style>
+    :root { --green: #2e7d32; --ink: #1b2a1e; --muted: #55655a; --line: #e2e8e3; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--ink); line-height: 1.6; background: #f7faf7;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 28px 20px 64px; }
+    header { border-bottom: 2px solid var(--green); padding-bottom: 14px; margin-bottom: 22px; }
+    h1 { font-size: 1.7rem; margin: 0 0 4px; color: var(--green); }
+    h2 { font-size: 1.2rem; margin: 30px 0 8px; }
+    h3 { font-size: 1.02rem; margin: 18px 0 4px; }
+    .muted { color: var(--muted); font-size: .92rem; }
+    a { color: var(--green); }
+    table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: .95rem; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef4ef; }
+    code { background: #eef4ef; padding: 1px 5px; border-radius: 4px; font-size: .9em; }
+    ul { padding-left: 20px; }
+    footer { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 14px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Zásady ochrany osobních údajů</h1>
+    <p class="muted">Aplikace <strong>Smart Garden</strong> (Chytré zalévání) · Účinné od 11. 7. 2026</p>
+  </header>
+
+  <p>
+    Tyto zásady vysvětlují, jaké osobní údaje aplikace Smart Garden zpracovává, proč, komu je
+    případně předává a jaká máš práva. Aplikace je postavená tak, aby fungovala <strong>i bez
+    účtu a co nejvíc dat drží přímo v tvém telefonu</strong>.
+  </p>
+
+  <h2>1. Kdo je správce údajů</h2>
+  <p>
+    Správcem osobních údajů je <strong>VeKode studio</strong> (vývojář aplikace).<br>
+    Kontakt pro jakékoli dotazy a uplatnění práv: <a href="mailto:vekode.studio@gmail.com">vekode.studio@gmail.com</a>.
+  </p>
+
+  <h2>2. Jaké údaje zpracováváme</h2>
+  <table>
+    <tr><th>Kategorie</th><th>Konkrétně</th><th>Kde je to uložené</th></tr>
+    <tr>
+      <td>Poloha</td>
+      <td>Zeměpisné souřadnice zahrady (přesná poloha), volitelně adresa. Slouží k načtení počasí pro danou zahradu.</td>
+      <td>V telefonu; souřadnice se posílají službám počasí (viz níže). Poloha se nesbírá na pozadí.</td>
+    </tr>
+    <tr>
+      <td>Účet</td>
+      <td>E-mailová adresa a přihlašovací údaje (jen když si vytvoříš účet — je nepovinný).</td>
+      <td>Firebase Authentication; e-mail v soukromém záznamu, který čte jen tvůj účet.</td>
+    </tr>
+    <tr>
+      <td>Fotografie</td>
+      <td>Fotky rostlin, které si pořídíš. Při rozpoznání druhu se fotka odešle službě Pl@ntNet (jen na tvůj pokyn a po odstranění polohových údajů z fotky). Čtení textu ze štítku probíhá jen v telefonu.</td>
+      <td>V telefonu. Odeslání na Pl@ntNet jen při použití funkce rozpoznání.</td>
+    </tr>
+    <tr>
+      <td>Data zahrad a rostlin</td>
+      <td>Názvy, poznámky, adresa, druhy, historie zálivky, vytyčené hranice pozemku.</td>
+      <td>V telefonu. Do cloudu jdou jen když zapneš sdílení domácnosti nebo cloudovou zálohu.</td>
+    </tr>
+    <tr>
+      <td>Domácnost (sdílení)</td>
+      <td>Členství, zobrazované jméno, sdílené zahrady/rostliny/historie. E-maily členů se ostatním nezobrazují.</td>
+      <td>Firebase Firestore, jen pro členy dané domácnosti.</td>
+    </tr>
+    <tr>
+      <td>Diagnostika (nepovinné)</td>
+      <td>Hlášení o pádech a chybách: technická data o pádu, typ zařízení, verze systému, identifikátor instalace, IP adresa a (jsi-li přihlášen) identifikátor účtu. Neobsahuje obsah tvých zahrad, jméno ani polohu.</td>
+      <td>Firebase Crashlytics. <strong>Výchozí stav je vypnuto</strong> — sbírá se jen s tvým souhlasem (Nastavení → Soukromí).</td>
+    </tr>
+    <tr>
+      <td>Hlášení chyby</td>
+      <td>Když ručně nahlásíš chybu: tvůj popis, verze appky a model telefonu a krátký technický log posledních akcí; jsi-li přihlášen, i tvůj e-mail.</td>
+      <td>Firebase Firestore, čte jen vývojář. Odesílá se jen na tvůj pokyn.</td>
+    </tr>
+    <tr>
+      <td>Cloudová záloha (nepovinné)</td>
+      <td>Kompletní data appky z telefonu, když si zapneš zálohu na svůj účet.</td>
+      <td>Firebase Firestore, soukromé — čte a píše jen tvůj účet.</td>
+    </tr>
+  </table>
+
+  <h2>3. Proč údaje zpracováváme a na jakém základě</h2>
+  <ul>
+    <li><strong>Poloha a počasí</strong> — abychom spočítali, kdy zalít. Právní základ: plnění služby / oprávněný zájem (údaj zadáváš ty a je nezbytný pro hlavní funkci).</li>
+    <li><strong>Účet a sdílení domácnosti</strong> — abys mohl sdílet zahrady a zálohovat data. Právní základ: plnění smlouvy (vytvoření účtu je tvoje volba).</li>
+    <li><strong>Rozpoznání rostliny z fotky (Pl@ntNet)</strong> — jen na tvůj pokyn. Právní základ: souhlas (potvrzuješ před odesláním).</li>
+    <li><strong>Diagnostika pádů</strong> — abychom rychleji opravovali chyby. Právní základ: souhlas (výchozí vypnuto, kdykoli odvolatelné).</li>
+    <li><strong>Hlášení chyby</strong> — abychom vyřešili problém, který nahlásíš. Právní základ: oprávněný zájem / souhlas (odesíláš ho ty).</li>
+  </ul>
+
+  <h2>4. Komu údaje předáváme (zpracovatelé a příjemci)</h2>
+  <p>Nepredáváme údaje pro reklamu ani je neprodáváme. Využíváme tyto služby:</p>
+  <ul>
+    <li><strong>Google Firebase</strong> (Google Ireland/LLC) — přihlášení, cloudová databáze pro sdílení a zálohy, diagnostika pádů.</li>
+    <li><strong>MET Norway / Meteorologisk institutt</strong> (Norsko) — předpověď počasí; posílá se souřadnice zahrady.</li>
+    <li><strong>Open-Meteo</strong> (Německo) — předpověď počasí; posílá se souřadnice zahrady.</li>
+    <li><strong>Pl@ntNet</strong> (Francie) — rozpoznání druhu z fotky; posílá se fotka (bez polohových údajů) jen při použití funkce.</li>
+    <li><strong>OpenStreetMap</strong> — mapové podklady; při zobrazení mapy se načítají dlaždice podle zobrazené oblasti.</li>
+  </ul>
+
+  <h2>5. Přenos mimo EU</h2>
+  <p>
+    Služby počasí a rozpoznání (MET Norway, Open-Meteo, Pl@ntNet) běží v Evropském hospodářském
+    prostoru. Google Firebase může data zpracovávat i na serverech mimo EU (např. v USA); pro
+    takový přenos se uplatňují standardní smluvní doložky, případně rámec EU–US Data Privacy
+    Framework. Firebase se používá jen pro nepovinné funkce (účet, sdílení, záloha) a pro
+    diagnostiku po tvém souhlasu.
+  </p>
+
+  <h2>6. Jak dlouho údaje uchováváme</h2>
+  <ul>
+    <li><strong>Data v telefonu</strong> zůstávají, dokud je nesmažeš v aplikaci nebo appku neodinstaluješ.</li>
+    <li><strong>Cloudová data</strong> (účet, sdílení, záloha) uchováváme, dokud účet nesmažeš — pak je odstraníme (viz <a href="delete-account.html">Smazání účtu a dat</a>).</li>
+    <li><strong>Diagnostika a hlášení chyb</strong> se uchovávají jen po dobu nezbytnou k odladění a pak se mažou; na požádání je smažeme dřív.</li>
+  </ul>
+
+  <h2>7. Tvoje práva</h2>
+  <p>Podle GDPR máš právo na:</p>
+  <ul>
+    <li>přístup ke svým údajům a jejich opravu,</li>
+    <li>výmaz („právo být zapomenut") — účet i cloudová data smažeš přímo v appce (Nastavení → Smazat účet) nebo e-mailem, viz <a href="delete-account.html">Smazání účtu a dat</a>,</li>
+    <li>přenositelnost — export svých dat (v aplikaci nebo na vyžádání),</li>
+    <li>omezení zpracování a vznesení námitky,</li>
+    <li>odvolání souhlasu (např. diagnostiku vypneš v Nastavení → Soukromí; odvolání je stejně snadné jako udělení),</li>
+    <li>podání stížnosti u dozorového úřadu — v ČR <a href="https://www.uoou.cz" target="_blank" rel="noopener">Úřad pro ochranu osobních údajů (uoou.cz)</a>.</li>
+  </ul>
+  <p>Práva uplatníš na <a href="mailto:vekode.studio@gmail.com">vekode.studio@gmail.com</a>.</p>
+
+  <h2>8. Děti</h2>
+  <p>
+    Aplikace není určena dětem mladším 15 let a záměrně od nich nesbíráme osobní údaje.
+  </p>
+
+  <h2>9. Zabezpečení</h2>
+  <p>
+    Přenos dat probíhá šifrovaně (HTTPS). Cloudová data jsou přístupná jen tvému účtu, resp.
+    členům domácnosti, se kterou je vědomě sdílíš. Lokální záloha zařízení je vypnutá, aby
+    citlivá data (poloha zahrad) neopouštěla telefon nechtěně.
+  </p>
+
+  <h2>10. Změny těchto zásad</h2>
+  <p>
+    Zásady můžeme aktualizovat s vývojem aplikace. Aktuální verze je vždy na této adrese;
+    u nahoře je uvedeno datum účinnosti.
+  </p>
+
+  <h2>11. Kontakt</h2>
+  <p>
+    Správce: <strong>VeKode studio</strong> · <a href="mailto:vekode.studio@gmail.com">vekode.studio@gmail.com</a>
+  </p>
+
+  <footer>
+    <p class="muted">
+      © VeKode studio · <a href="index.html">Smart Garden</a> · <a href="delete-account.html">Smazání účtu a dat</a>
+    </p>
+  </footer>
+</div>
+</body>
+</html>
